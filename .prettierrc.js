@@ -5,5 +5,6 @@ export default {
   bracketSpacing: true,
   singleQuote: false,
   arrowParens: "avoid",
-  trailingComma: "none"
+  trailingComma: "es5",
+  semi: false // 禁用分号结尾
 };

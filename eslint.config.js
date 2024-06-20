@@ -59,7 +59,7 @@ export default defineFlatConfig([
       ...pluginPrettier.configs.recommended.rules,
       "no-debugger": "off",
       "no-unused-vars": [
-        "error",
+        "warn",
         {
           argsIgnorePattern: "^_",
           varsIgnorePattern: "^_"
@@ -104,7 +104,7 @@ export default defineFlatConfig([
         { allowBitwiseExpressions: true }
       ],
       "@typescript-eslint/no-unused-vars": [
-        "error",
+        "warn",
         {
           argsIgnorePattern: "^_",
           varsIgnorePattern: "^_"
