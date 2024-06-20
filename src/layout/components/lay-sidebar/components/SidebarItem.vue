@@ -1,50 +1,50 @@
 <script setup lang="ts">
-import path from "path";
-import { getConfig } from "@/config";
-import { menuType } from "@/layout/types";
-import { ReText } from "@/components/ReText";
-import { useNav } from "@/layout/hooks/useNav";
-import SidebarLinkItem from "./SidebarLinkItem.vue";
-import SidebarExtraIcon from "./SidebarExtraIcon.vue";
-import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import path from "path"
+import { getConfig } from "@/config"
+import { menuType } from "@/layout/types"
+import { ReText } from "@/components/ReText"
+import { useNav } from "@/layout/hooks/useNav"
+import SidebarLinkItem from "./SidebarLinkItem.vue"
+import SidebarExtraIcon from "./SidebarExtraIcon.vue"
+import { useRenderIcon } from "@/components/ReIcon/src/hooks"
 import {
   type PropType,
   type CSSProperties,
   ref,
   toRaw,
   computed,
-  useAttrs
-} from "vue";
+  useAttrs,
+} from "vue"
 
-import ArrowUp from "@iconify-icons/ep/arrow-up-bold";
-import EpArrowDown from "@iconify-icons/ep/arrow-down-bold";
-import ArrowLeft from "@iconify-icons/ep/arrow-left-bold";
-import ArrowRight from "@iconify-icons/ep/arrow-right-bold";
+import ArrowUp from "@iconify-icons/ep/arrow-up-bold"
+import EpArrowDown from "@iconify-icons/ep/arrow-down-bold"
+import ArrowLeft from "@iconify-icons/ep/arrow-left-bold"
+import ArrowRight from "@iconify-icons/ep/arrow-right-bold"
 
-const attrs = useAttrs();
-const { layout, isCollapse, tooltipEffect, getDivStyle } = useNav();
+const attrs = useAttrs()
+const { layout, isCollapse, tooltipEffect, getDivStyle } = useNav()
 
 const props = defineProps({
   item: {
-    type: Object as PropType<menuType>
+    type: Object as PropType<menuType>,
   },
   isNest: {
     type: Boolean,
-    default: false
+    default: false,
   },
   basePath: {
     type: String,
-    default: ""
-  }
-});
+    default: "",
+  },
+})
 
 const getNoDropdownStyle = computed((): CSSProperties => {
   return {
     width: "100%",
     display: "flex",
-    alignItems: "center"
-  };
-});
+    alignItems: "center",
+  }
+})
 
 const getSubMenuIconStyle = computed((): CSSProperties => {
   return {
@@ -56,50 +56,50 @@ const getSubMenuIconStyle = computed((): CSSProperties => {
         ? "0 5px 0 0"
         : isCollapse.value
           ? "0 auto"
-          : "0 5px 0 0"
-  };
-});
+          : "0 5px 0 0",
+  }
+})
 
 const expandCloseIcon = computed(() => {
-  if (!getConfig()?.MenuArrowIconNoTransition) return "";
+  if (!getConfig()?.MenuArrowIconNoTransition) return ""
   return {
     "expand-close-icon": useRenderIcon(EpArrowDown),
     "expand-open-icon": useRenderIcon(ArrowUp),
     "collapse-close-icon": useRenderIcon(ArrowRight),
-    "collapse-open-icon": useRenderIcon(ArrowLeft)
-  };
-});
+    "collapse-open-icon": useRenderIcon(ArrowLeft),
+  }
+})
 
-const onlyOneChild: menuType = ref(null);
+const onlyOneChild: menuType = ref(null)
 
 function hasOneShowingChild(children: menuType[] = [], parent: menuType) {
   const showingChildren = children.filter((item: any) => {
-    onlyOneChild.value = item;
-    return true;
-  });
+    onlyOneChild.value = item
+    return true
+  })
 
   if (showingChildren[0]?.meta?.showParent) {
-    return false;
+    return false
   }
 
   if (showingChildren.length === 1) {
-    return true;
+    return true
   }
 
   if (showingChildren.length === 0) {
-    onlyOneChild.value = { ...parent, path: "", noShowingChildren: true };
-    return true;
+    onlyOneChild.value = { ...parent, path: "", noShowingChildren: true }
+    return true
   }
-  return false;
+  return false
 }
 
 function resolvePath(routePath) {
-  const httpReg = /^http(s?):\/\//;
+  const httpReg = /^http(s?):\/\//
   if (httpReg.test(routePath) || httpReg.test(props.basePath)) {
-    return routePath || props.basePath;
+    return routePath || props.basePath
   } else {
     // 使用path.posix.resolve替代path.resolve 避免windows环境下使用electron出现盘符问题
-    return path.posix.resolve(props.basePath, routePath);
+    return path.posix.resolve(props.basePath, routePath)
   }
 }
 </script>
@@ -127,7 +127,7 @@ function resolvePath(routePath) {
           :is="
             useRenderIcon(
               toRaw(onlyOneChild.meta.icon) ||
-                (item.meta && toRaw(item.meta.icon))
+                (item.meta && toRaw(item.meta.icon)),
             )
           "
         />
@@ -154,7 +154,7 @@ function resolvePath(routePath) {
           <ReText
             :tippyProps="{
               offset: [0, -10],
-              theme: tooltipEffect
+              theme: tooltipEffect,
             }"
             class="!w-full !text-inherit"
           >
@@ -193,7 +193,7 @@ function resolvePath(routePath) {
         "
         :tippyProps="{
           offset: [0, -10],
-          theme: tooltipEffect
+          theme: tooltipEffect,
         }"
         :class="{
           '!w-full': true,
@@ -202,7 +202,7 @@ function resolvePath(routePath) {
             layout !== 'horizontal' &&
             isCollapse &&
             !toRaw(item.meta.icon) &&
-            item.parentId === null
+            item.parentId === null,
         }"
       >
         {{ item.meta.title }}

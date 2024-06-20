@@ -1,20 +1,20 @@
-import { defineStore } from "pinia";
+import { defineStore } from "pinia"
 import {
   type userType,
   store,
   router,
   resetRouter,
   routerArrays,
-  storageLocal
-} from "../utils";
+  storageLocal,
+} from "../utils"
 import {
   type UserResult,
   type RefreshTokenResult,
   getLogin,
-  refreshTokenApi
-} from "@/api/user";
-import { useMultiTagsStoreHook } from "./multiTags";
-import { type DataInfo, setToken, removeToken, userKey } from "@/utils/auth";
+  refreshTokenApi,
+} from "@/api/user"
+import { useMultiTagsStoreHook } from "./multiTags"
+import { type DataInfo, setToken, removeToken, userKey } from "@/utils/auth"
 
 export const useUserStore = defineStore({
   id: "pure-user",
@@ -30,54 +30,54 @@ export const useUserStore = defineStore({
     // 是否勾选了登录页的免登录
     isRemembered: false,
     // 登录页的免登录存储几天，默认7天
-    loginDay: 7
+    loginDay: 7,
   }),
   actions: {
     /** 存储头像 */
     SET_AVATAR(avatar: string) {
-      this.avatar = avatar;
+      this.avatar = avatar
     },
     /** 存储用户名 */
     SET_USERNAME(username: string) {
-      this.username = username;
+      this.username = username
     },
     /** 存储昵称 */
     SET_NICKNAME(nickname: string) {
-      this.nickname = nickname;
+      this.nickname = nickname
     },
     /** 存储角色 */
     SET_ROLES(roles: Array<string>) {
-      this.roles = roles;
+      this.roles = roles
     },
     /** 存储是否勾选了登录页的免登录 */
     SET_ISREMEMBERED(bool: boolean) {
-      this.isRemembered = bool;
+      this.isRemembered = bool
     },
     /** 设置登录页的免登录存储几天 */
     SET_LOGINDAY(value: number) {
-      this.loginDay = Number(value);
+      this.loginDay = Number(value)
     },
     /** 登入 */
     async loginByUsername(data) {
       return new Promise<UserResult>((resolve, reject) => {
         getLogin(data)
           .then(data => {
-            if (data?.success) setToken(data.data);
-            resolve(data);
+            if (data?.success) setToken(data.data)
+            resolve(data)
           })
           .catch(error => {
-            reject(error);
-          });
-      });
+            reject(error)
+          })
+      })
     },
     /** 前端登出（不调用接口） */
     logOut() {
-      this.username = "";
-      this.roles = [];
-      removeToken();
-      useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
-      resetRouter();
-      router.push("/login");
+      this.username = ""
+      this.roles = []
+      removeToken()
+      useMultiTagsStoreHook().handleTags("equal", [...routerArrays])
+      resetRouter()
+      router.push("/login")
     },
     /** 刷新`token` */
     async handRefreshToken(data) {
@@ -85,18 +85,18 @@ export const useUserStore = defineStore({
         refreshTokenApi(data)
           .then(data => {
             if (data) {
-              setToken(data.data);
-              resolve(data);
+              setToken(data.data)
+              resolve(data)
             }
           })
           .catch(error => {
-            reject(error);
-          });
-      });
-    }
-  }
-});
+            reject(error)
+          })
+      })
+    },
+  },
+})
 
 export function useUserStoreHook() {
-  return useUserStore(store);
+  return useUserStore(store)
 }

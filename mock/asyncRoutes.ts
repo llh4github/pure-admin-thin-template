@@ -1,5 +1,5 @@
 // 模拟后端动态生成路由
-import { defineFakeRoute } from "vite-plugin-fake-server/client";
+import { defineFakeRoute } from "vite-plugin-fake-server/client"
 
 /**
  * roles：页面级别权限，这里模拟二种 "admin"、"common"
@@ -11,7 +11,7 @@ const permissionRouter = {
   meta: {
     title: "权限管理",
     icon: "ep:lollipop",
-    rank: 10
+    rank: 10,
   },
   children: [
     {
@@ -19,8 +19,8 @@ const permissionRouter = {
       name: "PermissionPage",
       meta: {
         title: "页面权限",
-        roles: ["admin", "common"]
-      }
+        roles: ["admin", "common"],
+      },
     },
     {
       path: "/permission/button/index",
@@ -31,12 +31,12 @@ const permissionRouter = {
         auths: [
           "permission:btn:add",
           "permission:btn:edit",
-          "permission:btn:delete"
-        ]
-      }
-    }
-  ]
-};
+          "permission:btn:delete",
+        ],
+      },
+    },
+  ],
+}
 
 export default defineFakeRoute([
   {
@@ -45,8 +45,8 @@ export default defineFakeRoute([
     response: () => {
       return {
         success: true,
-        data: [permissionRouter]
-      };
-    }
-  }
-]);
+        data: [permissionRouter],
+      }
+    },
+  },
+])

@@ -1,11 +1,11 @@
-import js from "@eslint/js";
-import pluginVue from "eslint-plugin-vue";
-import * as parserVue from "vue-eslint-parser";
-import configPrettier from "eslint-config-prettier";
-import pluginPrettier from "eslint-plugin-prettier";
-import { defineFlatConfig } from "eslint-define-config";
-import * as parserTypeScript from "@typescript-eslint/parser";
-import pluginTypeScript from "@typescript-eslint/eslint-plugin";
+import js from "@eslint/js"
+import pluginVue from "eslint-plugin-vue"
+import * as parserVue from "vue-eslint-parser"
+import configPrettier from "eslint-config-prettier"
+import pluginPrettier from "eslint-plugin-prettier"
+import { defineFlatConfig } from "eslint-define-config"
+import * as parserTypeScript from "@typescript-eslint/parser"
+import pluginTypeScript from "@typescript-eslint/eslint-plugin"
 
 export default defineFlatConfig([
   {
@@ -16,7 +16,7 @@ export default defineFlatConfig([
       "*.d.ts",
       "public/*",
       "src/assets/**",
-      "src/**/iconfont/**"
+      "src/**/iconfont/**",
     ],
     languageOptions: {
       globals: {
@@ -48,41 +48,42 @@ export default defineFlatConfig([
         PromiseFn: "readonly",
         ComponentElRef: "readonly",
         parseInt: "readonly",
-        parseFloat: "readonly"
-      }
+        parseFloat: "readonly",
+      },
     },
     plugins: {
-      prettier: pluginPrettier
+      prettier: pluginPrettier,
     },
     rules: {
       ...configPrettier.rules,
       ...pluginPrettier.configs.recommended.rules,
+      "comma-dangle": ["error", "always-multiline"],
       "no-debugger": "off",
       "no-unused-vars": [
         "warn",
         {
           argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_"
-        }
+          varsIgnorePattern: "^_",
+        },
       ],
       "prettier/prettier": [
         "error",
         {
-          endOfLine: "auto"
-        }
-      ]
-    }
+          endOfLine: "auto",
+        },
+      ],
+    },
   },
   {
     files: ["**/*.?([cm])ts", "**/*.?([cm])tsx"],
     languageOptions: {
       parser: parserTypeScript,
       parserOptions: {
-        sourceType: "module"
-      }
+        sourceType: "module",
+      },
     },
     plugins: {
-      "@typescript-eslint": pluginTypeScript
+      "@typescript-eslint": pluginTypeScript,
     },
     rules: {
       ...pluginTypeScript.configs.strict.rules,
@@ -95,37 +96,38 @@ export default defineFlatConfig([
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-import-type-side-effects": "error",
       "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
       "@typescript-eslint/consistent-type-imports": [
         "error",
-        { disallowTypeAnnotations: false, fixStyle: "inline-type-imports" }
+        { disallowTypeAnnotations: false, fixStyle: "inline-type-imports" },
       ],
       "@typescript-eslint/prefer-literal-enum-member": [
         "error",
-        { allowBitwiseExpressions: true }
+        { allowBitwiseExpressions: true },
       ],
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {
           argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_"
-        }
-      ]
-    }
+          varsIgnorePattern: "^_",
+        },
+      ],
+    },
   },
   {
     files: ["**/*.d.ts"],
     rules: {
       "eslint-comments/no-unlimited-disable": "off",
       "import/no-duplicates": "off",
-      "unused-imports/no-unused-vars": "off"
-    }
+      "unused-imports/no-unused-vars": "off",
+    },
   },
   {
     files: ["**/*.?([cm])js"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
-      "@typescript-eslint/no-var-requires": "off"
-    }
+      "@typescript-eslint/no-var-requires": "off",
+    },
   },
   {
     files: ["**/*.vue"],
@@ -137,20 +139,20 @@ export default defineFlatConfig([
         $customRef: "readonly",
         $ref: "readonly",
         $shallowRef: "readonly",
-        $toRef: "readonly"
+        $toRef: "readonly",
       },
       parser: parserVue,
       parserOptions: {
         ecmaFeatures: {
-          jsx: true
+          jsx: true,
         },
         extraFileExtensions: [".vue"],
         parser: "@typescript-eslint/parser",
-        sourceType: "module"
-      }
+        sourceType: "module",
+      },
     },
     plugins: {
-      vue: pluginVue
+      vue: pluginVue,
     },
     processor: pluginVue.processors[".vue"],
     rules: {
@@ -170,12 +172,12 @@ export default defineFlatConfig([
           html: {
             void: "always",
             normal: "always",
-            component: "always"
+            component: "always",
           },
           svg: "always",
-          math: "always"
-        }
-      ]
-    }
-  }
-]);
+          math: "always",
+        },
+      ],
+    },
+  },
+])

@@ -17,8 +17,8 @@ const include = [
   "sortablejs",
   "@vueuse/core",
   "@pureadmin/utils",
-  "responsive-storage"
-];
+  "responsive-storage",
+]
 
 /**
  * 在预构建中强制排除的依赖项
@@ -27,7 +27,7 @@ const include = [
 const exclude = [
   "@iconify-icons/ep",
   "@iconify-icons/ri",
-  "@pureadmin/theme/dist/browser-utils"
-];
+  "@pureadmin/theme/dist/browser-utils",
+]
 
-export { include, exclude };
+export { include, exclude }

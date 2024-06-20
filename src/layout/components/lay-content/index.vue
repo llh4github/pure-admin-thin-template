@@ -1,52 +1,52 @@
 <script setup lang="ts">
-import LayFrame from "../lay-frame/index.vue";
-import LayFooter from "../lay-footer/index.vue";
-import { useTags } from "@/layout/hooks/useTag";
-import { useGlobal, isNumber } from "@pureadmin/utils";
-import BackTopIcon from "@/assets/svg/back_top.svg?component";
-import { h, computed, Transition, defineComponent } from "vue";
-import { usePermissionStoreHook } from "@/store/modules/permission";
+import LayFrame from "../lay-frame/index.vue"
+import LayFooter from "../lay-footer/index.vue"
+import { useTags } from "@/layout/hooks/useTag"
+import { useGlobal, isNumber } from "@pureadmin/utils"
+import BackTopIcon from "@/assets/svg/back_top.svg?component"
+import { h, computed, Transition, defineComponent } from "vue"
+import { usePermissionStoreHook } from "@/store/modules/permission"
 
 const props = defineProps({
-  fixedHeader: Boolean
-});
+  fixedHeader: Boolean,
+})
 
-const { showModel } = useTags();
-const { $storage, $config } = useGlobal<GlobalPropertiesApi>();
+const { showModel } = useTags()
+const { $storage, $config } = useGlobal<GlobalPropertiesApi>()
 
 const isKeepAlive = computed(() => {
-  return $config?.KeepAlive;
-});
+  return $config?.KeepAlive
+})
 
 const transitions = computed(() => {
   return route => {
-    return route.meta.transition;
-  };
-});
+    return route.meta.transition
+  }
+})
 
 const hideTabs = computed(() => {
-  return $storage?.configure.hideTabs;
-});
+  return $storage?.configure.hideTabs
+})
 
 const hideFooter = computed(() => {
-  return $storage?.configure.hideFooter;
-});
+  return $storage?.configure.hideFooter
+})
 
 const stretch = computed(() => {
-  return $storage?.configure.stretch;
-});
+  return $storage?.configure.stretch
+})
 
 const layout = computed(() => {
-  return $storage?.layout.layout === "vertical";
-});
+  return $storage?.layout.layout === "vertical"
+})
 
 const getMainWidth = computed(() => {
   return isNumber(stretch.value)
     ? stretch.value + "px"
     : stretch.value
       ? "1440px"
-      : "100%";
-});
+      : "100%"
+})
 
 const getSectionStyle = computed(() => {
   return [
@@ -68,22 +68,22 @@ const getSectionStyle = computed(() => {
           hideTabs.value
             ? "min-height: calc(100vh - 48px);"
             : "min-height: calc(100vh - 86px);"
-        }`
-  ];
-});
+        }`,
+  ]
+})
 
 const transitionMain = defineComponent({
   props: {
     route: {
       type: undefined,
-      required: true
-    }
+      required: true,
+    },
   },
   render() {
     const transitionName =
-      transitions.value(this.route)?.name || "fade-transform";
-    const enterTransition = transitions.value(this.route)?.enterTransition;
-    const leaveTransition = transitions.value(this.route)?.leaveTransition;
+      transitions.value(this.route)?.name || "fade-transform"
+    const enterTransition = transitions.value(this.route)?.enterTransition
+    const leaveTransition = transitions.value(this.route)?.leaveTransition
     return h(
       Transition,
       {
@@ -95,14 +95,14 @@ const transitionMain = defineComponent({
           ? `animate__animated ${leaveTransition}`
           : undefined,
         mode: "out-in",
-        appear: true
+        appear: true,
       },
       {
-        default: () => [this.$slots.default()]
-      }
-    );
-  }
-});
+        default: () => [this.$slots.default()],
+      },
+    )
+  },
+})
 </script>
 
 <template>
@@ -121,13 +121,13 @@ const transitionMain = defineComponent({
                 'flex-wrap': 'wrap',
                 'max-width': getMainWidth,
                 margin: '0 auto',
-                transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)'
+                transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)',
               }"
               :view-style="{
                 display: 'flex',
                 flex: 'auto',
                 overflow: 'hidden',
-                'flex-direction': 'column'
+                'flex-direction': 'column',
               }"
             >
               <el-backtop

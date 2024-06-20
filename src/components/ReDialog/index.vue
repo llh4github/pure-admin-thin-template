@@ -4,18 +4,18 @@ import {
   type ButtonProps,
   type DialogOptions,
   closeDialog,
-  dialogStore
-} from "./index";
-import { ref, computed } from "vue";
-import { isFunction } from "@pureadmin/utils";
-import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
-import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill";
+  dialogStore,
+} from "./index"
+import { ref, computed } from "vue"
+import { isFunction } from "@pureadmin/utils"
+import Fullscreen from "@iconify-icons/ri/fullscreen-fill"
+import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill"
 
 defineOptions({
-  name: "ReDialog"
-});
+  name: "ReDialog",
+})
 
-const fullscreen = ref(false);
+const fullscreen = ref(false)
 
 const footerButtons = computed(() => {
   return (options: DialogOptions) => {
@@ -28,13 +28,13 @@ const footerButtons = computed(() => {
             bg: true,
             btnClick: ({ dialog: { options, index } }) => {
               const done = () =>
-                closeDialog(options, index, { command: "cancel" });
+                closeDialog(options, index, { command: "cancel" })
               if (options?.beforeCancel && isFunction(options?.beforeCancel)) {
-                options.beforeCancel(done, { options, index });
+                options.beforeCancel(done, { options, index })
               } else {
-                done();
+                done()
               }
-            }
+            },
           },
           {
             label: "确定",
@@ -44,17 +44,17 @@ const footerButtons = computed(() => {
             popconfirm: options?.popconfirm,
             btnClick: ({ dialog: { options, index } }) => {
               const done = () =>
-                closeDialog(options, index, { command: "sure" });
+                closeDialog(options, index, { command: "sure" })
               if (options?.beforeSure && isFunction(options?.beforeSure)) {
-                options.beforeSure(done, { options, index });
+                options.beforeSure(done, { options, index })
               } else {
-                done();
+                done()
               }
-            }
-          }
-        ] as Array<ButtonProps>);
-  };
-});
+            },
+          },
+        ] as Array<ButtonProps>)
+  }
+})
 
 const fullscreenClass = computed(() => {
   return [
@@ -62,29 +62,29 @@ const fullscreenClass = computed(() => {
     "el-dialog__close",
     "-translate-x-2",
     "cursor-pointer",
-    "hover:!text-[red]"
-  ];
-});
+    "hover:!text-[red]",
+  ]
+})
 
 function eventsCallBack(
   event: EventType,
   options: DialogOptions,
   index: number,
-  isClickFullScreen = false
+  isClickFullScreen = false,
 ) {
-  if (!isClickFullScreen) fullscreen.value = options?.fullscreen ?? false;
+  if (!isClickFullScreen) fullscreen.value = options?.fullscreen ?? false
   if (options?.[event] && isFunction(options?.[event])) {
-    return options?.[event]({ options, index });
+    return options?.[event]({ options, index })
   }
 }
 
 function handleClose(
   options: DialogOptions,
   index: number,
-  args = { command: "close" }
+  args = { command: "close" },
 ) {
-  closeDialog(options, index, args);
-  eventsCallBack("close", options, index);
+  closeDialog(options, index, args)
+  eventsCallBack("close", options, index)
 }
 </script>
 
@@ -116,13 +116,13 @@ function handleClose(
           :class="fullscreenClass"
           @click="
             () => {
-              fullscreen = !fullscreen;
+              fullscreen = !fullscreen
               eventsCallBack(
                 'fullscreenCallBack',
                 { ...options, fullscreen },
                 index,
-                true
-              );
+                true,
+              )
             }
           "
         >
@@ -161,7 +161,7 @@ function handleClose(
             @confirm="
               btn.btnClick({
                 dialog: { options, index },
-                button: { btn, index: key }
+                button: { btn, index: key },
               })
             "
           >
@@ -175,7 +175,7 @@ function handleClose(
             @click="
               btn.btnClick({
                 dialog: { options, index },
-                button: { btn, index: key }
+                button: { btn, index: key },
               })
             "
           >
